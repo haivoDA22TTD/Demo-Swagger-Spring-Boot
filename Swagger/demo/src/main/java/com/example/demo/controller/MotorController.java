@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,9 +38,12 @@ public class MotorController {
 
     @Operation(summary = "Create new motor")
     @PostMapping
-    public Motor createMotor(@RequestBody Motor motor) {
-        return motorService.saveMotor(motor);
-    }
+public ResponseEntity<Motor> createMotor(@RequestBody Motor motor) {
+    motor.setId(null); // đảm bảo thêm mới
+    Motor saved = motorService.saveMotor(motor);
+    return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+}
+
 
     @Operation(summary = "Delete motor by ID")
     @DeleteMapping("/{id}")
@@ -46,3 +51,4 @@ public class MotorController {
         motorService.deleteMotor(id);
     }
 }
+

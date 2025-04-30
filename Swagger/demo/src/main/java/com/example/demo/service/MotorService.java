@@ -25,7 +25,7 @@ public class MotorService {
     public Motor saveMotor(Motor motor) {
         return motorRepository.save(motor);
     }
-
+    
     public void deleteMotor(Long id) {
         motorRepository.deleteById(id);
     }
